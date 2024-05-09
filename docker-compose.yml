@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+
+   # Define un servicio llamado 'mysql'.
+  mysql:
+    # Utiliza la imagen MySQL versión 8.0 desde Docker Hub.
+    image: mysql:8.0
+    # Mapea el puerto 3306 del contenedor al puerto 33065 del host.
+    ports:
+    - "3306:3306"
+    # Establece datos de la conexion a la DB
+    environment:
+      MYSQL_ROOT_PASSWORD: desarrollo123
+      MYSQL_DATABASE: laravel11
+      MYSQL_PASSWORD: desarrollo123
+    # Monta el directorio local './data' en '/var/lib/mysql' dentro del contenedor.
+    volumes:
+      - ./data:/var/lib/mysql
+
+  # Establece la versión de Docker Compose que se usará
+  app:
+    # Especifica que se debe construir la imagen a partir del Dockerfile en el directorio actual.
+    build: .
+    # Mapea el puerto 80 del contenedor al puerto 80 del host.
+    ports:
+      - "80:80"
+    # Monta el directorio local './data' en '/var/lib/mysql' dentro del contenedor.
+    #volumes:
+     # - ./data:/var/lib/mysql
+    # Indica que este servicio depende del servicio 'mysql'.
+    depends_on:
+      - mysql
+
+ 
+
