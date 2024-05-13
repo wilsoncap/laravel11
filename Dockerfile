@@ -18,6 +18,13 @@ COPY . .
 # Expone el puerto 80 del contenedor para que sea accesible desde el host.
 EXPOSE 80
 
+
+RUN chmod 777 storage/logs/laravel.log
+RUN chmod -R 777 storage/framework/views
+
+RUN docker-php-ext-install pdo pdo_mysql
+
+
 # Ejecuta el comando "php artisan serve" cuando se inicie el contenedor.
 #CMD ["php", "artisan", "serve"]
 CMD ["apache2ctl", "-D", "FOREGROUND"]

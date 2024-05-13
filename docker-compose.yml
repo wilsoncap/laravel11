@@ -11,12 +11,25 @@ services:
     - "3306:3306"
     # Establece datos de la conexion a la DB
     environment:
-      MYSQL_ROOT_PASSWORD: desarrollo123
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: laravel11
       MYSQL_PASSWORD: desarrollo123
     # Monta el directorio local './data' en '/var/lib/mysql' dentro del contenedor.
     volumes:
       - ./data:/var/lib/mysql
+    networks:
+      - laravel_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: desarrollo123
+    networks:
+      - laravel_network
 
   # Establece la versión de Docker Compose que se usará
   app:
@@ -31,6 +44,14 @@ services:
     # Indica que este servicio depende del servicio 'mysql'.
     depends_on:
       - mysql
+    networks:
+      - laravel_network
+
+
+# Define la red a la que pertenecen los servicios
+networks:
+  laravel_network:
+    driver: bridge
 
  
 
