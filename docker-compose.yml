@@ -43,6 +43,7 @@ services:
     # Monta el directorio local './data' en '/var/lib/mysql' dentro del contenedor.
     volumes:
       - ./storage:/var/www/html/storage/app/public
+      - ./code:/var/www/html
     # Indica que este servicio depende del servicio 'mysql'.
     depends_on:
       - mysql
